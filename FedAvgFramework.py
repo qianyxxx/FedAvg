@@ -59,13 +59,14 @@ class Classifier(nn.Module):
         return x
 
 
-def train(model, trainloader, epochs=5, lr=0.001, pbar=None):
+def train(model, trainloader, epochs, lr, pbar=None):
     """
     Function to train the model.
     :param model: neural network model to be trained
     :param trainloader: the loader for the training data
     :param epochs: the number of training epochs
     :param lr: learning rate
+    :param batch_size: size of batches for training
     :param pbar: progress bar
     """
     # Prepare the model for training
@@ -239,11 +240,15 @@ def main(args):
     Main function for executing the program.
     """
     # Get command line arguments
-    lr = args.lr
-    num_clients = args.num_clients
-    epochs = args.epochs
-    batch_size = args.batch_size
-    rounds = args.rounds
+    lr = args.lr if args.lr else 0.01
+    num_clients = args.num_clients if args.num_clients else 1
+    epochs = args.epochs if args.epochs else 5
+    batch_size = args.batch_size if args.batch_size else 64
+    rounds = args.rounds if args.rounds else 10
+
+    if not lr or not num_clients or not epochs or not batch_size or not rounds:
+        print("All arguments must be specified. Add '-h' for help.")
+        return
 
     print(f'Training on device: {device}')
 
@@ -253,7 +258,6 @@ def main(args):
 
     # Perform global training
     global_accuracies = global_train(model, trainset, testset, rounds=rounds, epochs=epochs, lr=lr, batch_size=batch_size, num_clients=num_clients)
-
     # Plot the resulting accuracies over the communication rounds
     fig, ax = plt.subplots(figsize=(12, 8))
 
