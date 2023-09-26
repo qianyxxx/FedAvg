@@ -292,11 +292,11 @@ def main(args):
 if __name__ == "__main__":
     # Parse command line arguments
     parser = argparse.ArgumentParser()
-    parser.add_argument('lr', type=float, help='Learning rate')
-    parser.add_argument('num_clients', type=int, help='Number of clients')
-    parser.add_argument('epochs', type=int, help='Number of epochs')
-    parser.add_argument('batch_size', type=int, help='Batch size')
-    parser.add_argument('rounds', type=int, help='Number of communication rounds')
+    parser.add_argument('--lr', type=float, help='Learning rate')
+    parser.add_argument('--num_clients', type=int, help='Number of clients')
+    parser.add_argument('--epochs', type=int, help='Number of epochs')
+    parser.add_argument('--batch_size', type=int, help='Batch size')
+    parser.add_argument('--rounds', type=int, help='Number of communication rounds')
     args = parser.parse_args()
 
     # Call the main function
