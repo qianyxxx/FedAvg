@@ -2,7 +2,7 @@
  * @Author: Yan Qian
  * @Date: 2023-09-25 17:45:49
  * @LastEditors: Yan Qian
- * @LastEditTime: 2023-09-26 18:09:20
+ * @LastEditTime: 2023-09-27 12:39:35
  * @Description: Do not edit
 -->
 # FedAvg From Scratch
@@ -30,10 +30,10 @@ Finally, command line arguments are parsed to adjust the learning rate, number o
 To run the program, use the following command:
 
 ```
-python FedAvgFramework.py --lr 0.001 --num_clients 10 --epochs 5 --batch_size 32 --rounds 10
+python main.py --lr 0.001 --num_clients 10 --epochs 5 --batch_size 32 --rounds 10 --dataset MNIST
 ```
 
-You can adjust the learning rate, number of clients, number of epochs, batch size, and number of communication rounds.
+You can adjust the learning rate, number of clients, number of epochs, batch size, number of communication rounds, and choosed dataset.
 
 ### Output
 
@@ -55,18 +55,18 @@ The program will output a plot visualizing the accuracy of the global model afte
 然后创建了'Classifier()'类，该类定义了学习过程中使用的神经网络模型的结构。
 接下来是用于训练单个客户端('client_train()')，并行训练所有客户端('parallel_clients_train()')，平均客户端模型('avg_model()')，评估模型('evaluate()')和训练全局模型('global_train()')的函数。
 在'main()'函数中，编排了整个学习过程。
-最后，解析命令行参数以调整学习速率，客户端数量，周期数，批次大小和通信轮数。
+最后，解析命令行参数以调整学习速率，客户端数量，周期数，批次大小，通信轮数以及选择的数据集。
 
 ### 如何运行
 
 要运行程序，使用以下命令：
 
 ```
-python filename.py --lr 0.001 --num_clients 10 --epochs 5 --batch_size 32 --rounds 10
+python main.py --lr 0.001 --num_clients 10 --epochs 5 --batch_size 32 --rounds 10 --dataset MNIST
 ```
 
-你可以调整学习速率，客户端数量，周期数，批次大小和通信轮数。
+你可以调整学习速率，客户端数量，周期数，批次大小，通信轮数以及数据集。
 
 ### 输出
 
-该程序将输出一个图，显示每个通信轮次后全局模型的准确性。它还将这些数据以数据框的形式保存在一个名为'global_results.xlsx'的Excel文件和一个名为'global_results.png'的png文件中。
+该程序将输出一个图，显示每个通信轮次后全局模型的准确性。它还将这些数据以数据框的形式保存在一个前缀名为'global_results.xlsx'的Excel文件和一个名为'global_results.png'的png文件中。
