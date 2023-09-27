@@ -2,7 +2,7 @@
 Author: Yan Qian
 Date: 2023-09-27 10:30:28
 LastEditors: Yan Qian
-LastEditTime: 2023-09-27 12:35:06
+LastEditTime: 2023-09-27 15:33:18
 Description: Do not edit
 '''
 import argparse
@@ -81,14 +81,14 @@ def main(args):
     plt.tight_layout()
 
     # 保存图片
-    plt.savefig('../results/global_results_lr{}_clients{}_{}.png'.format(lr, num_clients, dataset))
+    plt.savefig('../results/global_results_lr{}_clients{}_rounds{}_{}.png'.format(lr, num_clients, rounds, dataset))
 
     # Save the results in a dataframe
     df = pd.DataFrame({
         'Communication Round': np.arange(1, rounds+1).tolist(),
         'Test Accuracy': global_accuracies
     })
-    df.to_excel('../results/global_results_lr{}_clients{}_{}.xlsx'.format(lr, num_clients, dataset), index=False)
+    df.to_excel('../results/global_results_lr{}_clients{}_rounds{}_{}.xlsx'.format(lr, num_clients, rounds, dataset), index=False)
 
   
 if __name__ == "__main__":
