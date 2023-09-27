@@ -54,7 +54,7 @@ def train(model, trainloader, epochs, lr, pbar=None, device='cuda'):
     pbar.close()
     return model, losses
 
-def client_train(client_id, trainset, global_model_dict, epochs, lr, batch_size, queue, dataset='MNIST', device='cuda'):
+def client_train(client_id, trainset, global_model_dict, epochs, lr, batch_size, queue, dataset='CIFAR10', device='cuda'):
     """
     Function to train clients.
     :param client_id: ID of the client
@@ -88,11 +88,9 @@ def client_train(client_id, trainset, global_model_dict, epochs, lr, batch_size,
             pbar.update()
         # 清空所有CUDA缓存
         torch.cuda.empty_cache()
+        
 
-
-
-
-def parallel_clients_train(model, trainset, epochs, lr, batch_size, num_clients, dataset='MNIST'):
+def parallel_clients_train(model, trainset, epochs, lr, batch_size, num_clients, dataset):
     """
     Function to train clients in parallel.
     :param model: The original neural network model
@@ -129,10 +127,10 @@ def parallel_clients_train(model, trainset, epochs, lr, batch_size, num_clients,
         while not queue.empty():
             client_id, client_model_state, client_loss = queue.get()
             if client_model_state is not None:
-                if dataset == 'MNIST':
-                    client_model = MNIST_Classifier()
-                else: # 'CIFAR'
+                if dataset == 'CIFAR10':
                     client_model = CIFAR10_Classifier()
+                else: # 'MNIST'
+                    client_model = MNIST_Classifier()
                 client_model.load_state_dict(client_model_state)
                 client_models[client_id] = client_model
                 client_losses[client_id] = client_loss
@@ -142,7 +140,7 @@ def parallel_clients_train(model, trainset, epochs, lr, batch_size, num_clients,
     return client_models, client_losses
 
 
-def global_train(model, trainset, testset, rounds, epochs, lr, batch_size, num_clients, dataset='MNIST', device='cuda'):
+def global_train(model, trainset, testset, rounds, epochs, lr, batch_size, num_clients, dataset, device='cuda'):
     """
     Function to perform global training.
     :param model: The original neural network model
@@ -168,7 +166,7 @@ def global_train(model, trainset, testset, rounds, epochs, lr, batch_size, num_c
         global_accuracies.append(accuracy)
     return global_accuracies
 
-def avg_model(client_models, dataset='MNIST', device='cuda'):
+def avg_model(client_models, dataset, device='cuda'):
     """
     Function to average the model parameters.
     :param client_models: List of client models

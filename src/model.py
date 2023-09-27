@@ -2,11 +2,12 @@
 Author: Yan Qian
 Date: 2023-09-27 10:27:59
 LastEditors: Yan Qian
-LastEditTime: 2023-09-27 12:28:40
+LastEditTime: 2023-09-27 16:36:35
 Description: Do not edit
 '''
 import torch
 from torch import nn
+import torch.nn.functional as F
 
 class MNIST_Classifier(nn.Module):
     def __init__(self):
