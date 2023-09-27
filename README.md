@@ -2,19 +2,22 @@
  * @Author: Yan Qian
  * @Date: 2023-09-25 17:45:49
  * @LastEditors: Yan Qian
- * @LastEditTime: 2023-09-27 12:39:35
+ * @LastEditTime: 2023-09-27 16:46:42
  * @Description: Do not edit
 -->
 # FedAvg From Scratch
 
 ## English Version
 
-### Federated Learning MNIST Classifier
+### Federated Learning MNIST and CIFAR10 Classifier
 This is a Python program using pyTorch to implement a Federated Learning system that trains an MNIST digit classifier. Clients train in parallel on their local data and the server averages the client models in each communication round to create a global model.
 
 ### Requirements
 
-This program requires the following Python modules: argparse, copy, torch, torchvision, pandas, numpy, matplotlib, tqdm and torch.multiprocessing. Make sure that you have installed these modules on your Python environment before running the program.
+This program requires the following Python modules: argparse, copy, torch, torchvision, pandas, numpy, matplotlib, tqdm and torch.multiprocessing. Make sure that you have installed these modules on your Python environment before running the program. You can directly install the environment by using the following command:
+```
+pip install -r requirements.txt
+```
 
 ### Program Description
 
@@ -41,12 +44,15 @@ The program will output a plot visualizing the accuracy of the global model afte
 
 ## Chinese Version
 
-### 分布式学习MNIST分类器
+### 分布式学习MNIST和CIFAR10分类器
 
 这是使用pyTorch实现的一个Python程序，它实现了一个分布式学习系统，该系统训练一个MNIST数字分类器。客户端在其本地数据上并行训练，服务器在每个通信轮次中平均客户端模型以创建全局模型。
 
 ### 程序要求
-这个程序需要以下的Python模块：argparse, copy, torch, torchvision, pandas, numpy, matplotlib, tqdm 和 torch.multiprocessing。在运行程序之前，请确保你已经在你的Python环境中安装了这些模块。
+这个程序需要以下的Python模块：argparse, copy, torch, torchvision, pandas, numpy, matplotlib, tqdm 和 torch.multiprocessing。在运行程序之前，请确保你已经在你的Python环境中安装了这些模块。你可以使用以下代码直接进行环境安装：
+```
+pip install -r requirements.txt
+```
 
 ### 程序描述
 
