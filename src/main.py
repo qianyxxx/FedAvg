@@ -2,7 +2,7 @@
 Author: Yan Qian
 Date: 2023-09-27 10:30:28
 LastEditors: Yan Qian
-LastEditTime: 2023-09-27 15:33:18
+LastEditTime: 2023-09-27 17:04:03
 Description: Do not edit
 '''
 import argparse
@@ -54,7 +54,7 @@ def main(args):
     model.to(device)
 
     # Perform global training
-    global_accuracies = global_train(model, trainset, testset, rounds=rounds, epochs=epochs, lr=lr, batch_size=batch_size, num_clients=num_clients)
+    global_accuracies = global_train(model, trainset, testset, rounds=rounds, epochs=epochs, lr=lr, batch_size=batch_size, num_clients=num_clients,dataset=dataset, device=device)
     
     # Plot the resulting accuracies over the communication rounds
     fig, ax = plt.subplots(figsize=(12, 8))
