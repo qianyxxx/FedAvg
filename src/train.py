@@ -3,7 +3,7 @@ from torch import nn, optim
 from tqdm import tqdm
 import copy
 import torch.multiprocessing as mp
-from model import MNIST_Classifier, CIFAR10_Classifier
+from model import MNIST_Classifier, CIFAR10_Classifier, CIFAR100_Classifier
 from evaluate import evaluate
 
 def train(model, trainloader, epochs, lr, pbar=None, device='cuda'):
@@ -54,7 +54,7 @@ def train(model, trainloader, epochs, lr, pbar=None, device='cuda'):
     pbar.close()
     return model, losses
 
-def client_train(client_id, trainset, global_model_dict, epochs, lr, batch_size, queue, dataset='CIFAR10', device='cuda'):
+def client_train(client_id, trainset, global_model_dict, epochs, lr, batch_size, queue, dataset, device='cuda'):
     """
     Function to train clients.
     :param client_id: ID of the client
@@ -70,8 +70,10 @@ def client_train(client_id, trainset, global_model_dict, epochs, lr, batch_size,
             try:
                 if dataset == 'MNIST':
                     client_model = MNIST_Classifier()
-                else: # 'CIFAR'
+                elif dataset == 'CIFAR10':
                     client_model = CIFAR10_Classifier()
+                elif dataset == 'CIFAR100':  # 为CIFAR100数据集指定模型
+                    client_model = CIFAR100_Classifier() 
 
                 # Load the state dict of the global model
                 client_model.load_state_dict(global_model_dict)
@@ -100,11 +102,14 @@ def parallel_clients_train(model, trainset, epochs, lr, batch_size, num_clients,
     :param batch_size: Size of the training batch
     :param num_clients: Number of clients
     """
+    # 就像在client_train中做的那样，我们需要为新数据集在这里添加一个判断条件，并据此加载适当的模型
     if model is None:
         if dataset == 'MNIST':
             model = MNIST_Classifier()
         elif dataset == 'CIFAR10':
             model = CIFAR10_Classifier()
+        elif dataset == 'CIFAR100':  # 为CIFAR100数据集指定模型
+            model = CIFAR100_Classifier()
         else:
             print("Invalid dataset!")
             return None
@@ -129,7 +134,9 @@ def parallel_clients_train(model, trainset, epochs, lr, batch_size, num_clients,
             if client_model_state is not None:
                 if dataset == 'CIFAR10':
                     client_model = CIFAR10_Classifier()
-                else: # 'MNIST'
+                elif dataset == 'CIFAR100':
+                    client_model = CIFAR100_Classifier()
+                elif dataset == 'MNIST': # 'MNIST'
                     client_model = MNIST_Classifier()
                 client_model.load_state_dict(client_model_state)
                 client_models[client_id] = client_model
@@ -171,10 +178,13 @@ def avg_model(client_models, dataset, device='cuda'):
     Function to average the model parameters.
     :param client_models: List of client models
     """
+    # 这里需要为新数据集添加一个判断条件，并据此加载适当的模型
     if dataset == 'MNIST':
         model = MNIST_Classifier()
-    else: # 'CIFAR'
+    elif dataset == 'CIFAR10':
         model = CIFAR10_Classifier()
+    elif dataset == 'CIFAR100':  # 为CIFAR100数据集指定模型
+        model = CIFAR100_Classifier()
 
     model.to(device)
     # Filter out None values from client_models
@@ -183,8 +193,11 @@ def avg_model(client_models, dataset, device='cuda'):
     if len(client_models) > 0:
         if dataset == 'MNIST':
             model = MNIST_Classifier()
-        else: # 'CIFAR'
+        elif dataset == 'CIFAR10':
             model = CIFAR10_Classifier()
+        elif dataset == 'CIFAR100':  # 为CIFAR100数据集指定模型
+            model = CIFAR100_Classifier()
+            
         model.to(device)
         avg_state_dict = {}
         # Average the model parameters
