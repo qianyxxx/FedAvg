@@ -2,14 +2,14 @@
  * @Author: Yan Qian
  * @Date: 2023-09-25 17:45:49
  * @LastEditors: Yan Qian
- * @LastEditTime: 2023-09-27 16:46:42
+ * @LastEditTime: 2023-10-06 13:46:20
  * @Description: Do not edit
 -->
 # FedAvg From Scratch
 
 ## English Version
 
-### Federated Learning MNIST and CIFAR10 Classifier
+### Federated Learning MNIST and CIFAR Classifier
 This is a Python program using pyTorch to implement a Federated Learning system that trains an MNIST digit classifier. Clients train in parallel on their local data and the server averages the client models in each communication round to create a global model.
 
 ### Requirements
@@ -30,7 +30,7 @@ Finally, command line arguments are parsed to adjust the learning rate, number o
 
 ### How to Run
 
-To run the program, use the following command:
+To run the program, use the following command as the example:
 
 ```
 python main.py --lr 0.001 --num_clients 10 --epochs 5 --batch_size 32 --rounds 10 --dataset MNIST
@@ -44,7 +44,7 @@ The program will output a plot visualizing the accuracy of the global model afte
 
 ## Chinese Version
 
-### 分布式学习MNIST和CIFAR10分类器
+### 分布式学习MNIST和CIFAR分类器
 
 这是使用pyTorch实现的一个Python程序，它实现了一个分布式学习系统，该系统训练一个MNIST数字分类器。客户端在其本地数据上并行训练，服务器在每个通信轮次中平均客户端模型以创建全局模型。
 
@@ -65,7 +65,7 @@ pip install -r requirements.txt
 
 ### 如何运行
 
-要运行程序，使用以下命令：
+要运行程序，以下是其中一个命令的例子：
 
 ```
 python main.py --lr 0.001 --num_clients 10 --epochs 5 --batch_size 32 --rounds 10 --dataset MNIST

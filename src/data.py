@@ -2,11 +2,13 @@
 Author: Yan Qian
 Date: 2023-09-27 10:25:43
 LastEditors: Yan Qian
-LastEditTime: 2023-09-28 10:36:44
+LastEditTime: 2023-10-03 11:34:03
 Description: Do not edit
 '''
 
 from torchvision import datasets, transforms
+import numpy as np
+from torch.utils.data import Subset
 
 def load_data(dataset='MNIST'):
     """
@@ -39,3 +41,28 @@ def load_data(dataset='MNIST'):
         raise ValueError(f"Invalid dataset name. Expected 'MNIST', 'CIFAR10' or 'CIFAR100', but got '{dataset}'")
 
     return trainset, testset
+
+def non_iid_partition(dataset, num_clients):
+    # Partition dataset to simulate non-iid data among clients.
+    # For simplicity, assume each client gets data of only 1 or 2 classes.
+    # Get the labels
+    labels = [target for _, target in dataset]
+    
+    # Split the indices by label
+    label_indices = [[] for _ in range(10)]  # assuming 10 classes for simplicity
+    for idx, label in enumerate(labels):
+        label_indices[label].append(idx)
+    
+    # Distribute the label indices among clients
+    num_labels_per_client = 10 // num_clients
+    client_data = {}
+    for i in range(num_clients):
+        start_label = i * num_labels_per_client
+        end_label = start_label + num_labels_per_client
+        indices = []
+        for j in range(start_label, end_label):
+            indices.extend(label_indices[j])
+        
+        client_data[i] = indices
+        
+    return client_data
